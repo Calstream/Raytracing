@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Raytracing
 {
-    class Vector
+    public class Vector
     {
 
         public double x;
