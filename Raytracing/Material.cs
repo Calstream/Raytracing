@@ -9,7 +9,7 @@ namespace Raytracing
 {
     public class Material
     {
-        Color color;
+        public Color color;
         public Material(Color c) { color = c; }
         public Material(int r, int g, int b, int a = 255)
         {

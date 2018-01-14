@@ -1,6 +1,6 @@
 ﻿namespace Raytracing
 {
-    partial class Form1
+    partial class Window
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Window
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(555, 521);
+            this.Name = "Window";
+            this.Text = "Raytracer";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

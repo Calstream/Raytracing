@@ -39,6 +39,6 @@ namespace Raytracing
             material = new Material(Color.LightPink);
         }
 
-        public abstract Color Intersect(Ray ray);
+        public abstract IntersectionInfo Intersect(Ray ray);
     }
 }

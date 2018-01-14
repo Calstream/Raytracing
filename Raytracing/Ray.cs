@@ -8,13 +8,13 @@ namespace Raytracing
 {
     public class Ray
     {
-        Vector position;
-        Vector direction;
+        public Vector Position;
+        public Vector Direction;
 
         public Ray(Vector pos, Vector dir)
         {
-            position = pos;
-            direction = dir;
+            Position = pos;
+            Direction = dir;
         }
     }
 }

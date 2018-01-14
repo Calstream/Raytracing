@@ -19,10 +19,10 @@ namespace Raytracing
 
         }
 
-        public override Color Intersect(Ray ray)
+        public override IntersectionInfo Intersect(Ray ray)
         {
             /// TODO
-            return Color.AliceBlue;
+            return null;
         }
 
         public override string ToString()
