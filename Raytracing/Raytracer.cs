@@ -64,8 +64,18 @@ namespace Raytracing
             Color color = Color.FromArgb((int)(info.Color.R * sa), (int)(info.Color.G * sa), (int)(info.Color.B * sa));
             //double shininess = Math.Pow(10, info.Element.Material.Gloss + 1);
 
-            
-            return color;
+            foreach (Light l in scene.lights)
+            {
+
+                // calculate diffuse lighting
+                Vector v = (l.Position - info.Position).normalize();
+
+                    double L = v.dot(info.Normal);
+                    if (L > 0.0f)
+                        color += info.Color * l.Color * L;
+            }
+
+                return color;
         }
 
 

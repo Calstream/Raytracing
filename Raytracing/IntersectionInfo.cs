@@ -15,6 +15,7 @@ namespace Raytracing
         public Vector Position; // position of intersection
         public Color Color; // color at intersection
         public double Distance; // distance from point to screen
+        public Vector Normal; // normal vector on intesection point 
 
         public IntersectionInfo() { }
     }

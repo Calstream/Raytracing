@@ -33,7 +33,7 @@ namespace Raytracing
                 info.Distance = -b - (double)Math.Sqrt(d);
                 info.Position = ray.Position + ray.Direction * info.Distance;
                 info.Color = this.Material.color;
-
+                info.Normal = (info.Position - Position).normalize();
             }
             else
                 info.IsHit = false;

@@ -38,6 +38,11 @@ namespace Raytracing
             eye_dir = new Vector(-0.2,0,5);
             backColor = Color.Gray;
             ambience = 0.8;
+
+            //lights.Add(new Light(new Vector(5, 10, -1), new Color(0.8, 0.8, 0.8)));
+            lights.Add(new Light(new Vector(-3, 5, -15), Color.FromArgb(230, 230, 230)));
+
+
             Vector t = new Vector(-0.5,0.5,2);
             Material m = new Material(Color.Red);
             Sphere s = new Sphere(t,1.2,m);

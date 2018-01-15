@@ -35,7 +35,7 @@ namespace Raytracing
             info.Position = ray.Position + ray.Direction * t;
             info.Distance = t;
             info.Color = Material.color;
-
+            info.Normal = Position;
             return info;
         }
     }
