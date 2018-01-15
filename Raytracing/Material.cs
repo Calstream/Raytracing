@@ -10,6 +10,7 @@ namespace Raytracing
     public class Material
     {
         public Color_dbl color;
+        public double Transparency;
         public Material(Color_dbl c) { color = c; }
         public Material(int r, int g, int b)
         {

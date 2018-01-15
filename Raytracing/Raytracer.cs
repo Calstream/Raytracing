@@ -45,7 +45,7 @@ namespace Raytracing
 
         public Color CalculateColor(Ray ray, Scene scene)
         {
-            IntersectionInfo info = TestIntersection(ray, scene);
+            IntersectionInfo info = TestIntersection(ray, scene,null);
             if (info.IsHit)
             {
                 // execute the actual raytrace algorithm
@@ -69,16 +69,33 @@ namespace Raytracing
                 // calculate diffuse lighting
                 Vector v = (l.Position - info.Position).normalize();
 
-                    double L = v.dot(info.Normal);
-                    if (L > 0.0f)
-                        color += info.Color * l.Color * L;
+                double L = v.dot(info.Normal);
+                if (L > 0.0f)
+                    color += info.Color * l.Color * L;
+
+
+                if (depth < 3)
+                {
+                    IntersectionInfo shadow = new IntersectionInfo();
+                    // calculate shadow, create ray from intersection point to light
+                    Ray shadowray = new Ray(info.Position, v);
+
+                    // find any element in between intersection point and light
+                    shadow = TestIntersection(shadowray, scene, info.hit_object);
+                    if (shadow.IsHit && shadow.hit_object != info.hit_object)
+                    {
+                        // only cast shadow if the found interesection is another
+                        // element than the current element
+                        color *= 0.5 + 0.5 * Math.Pow(shadow.hit_object.Material.Transparency, 0.5); // Math.Pow(.5, shadow.HitCount);
+                    }
+                }
             }
-            color.Correct();
+                color.Correct();
             return color.ToArgb();
         }
 
 
-        private IntersectionInfo TestIntersection(Ray ray, Scene scene)
+        private IntersectionInfo TestIntersection(Ray ray, Scene scene, IObject ignore)
         {
             int hitcount = 0;
             IntersectionInfo best = new IntersectionInfo();
@@ -86,6 +103,8 @@ namespace Raytracing
 
             foreach (IObject o in scene.objects)
             {
+                if (o == ignore)
+                    continue;
                 IntersectionInfo info = o.Intersect(ray);
                 if (info.IsHit && info.Distance < best.Distance && info.Distance >= 0)
                 {

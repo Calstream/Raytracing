@@ -50,15 +50,15 @@ namespace Raytracing
 
 
             Vector t = new Vector(-0.5,0.5,2);
-            Material m = new Material(new Color_dbl(1.0,0.0,0.0));
+            Material m = new Material(new Color_dbl(1.0,0.85,0.85));
             Sphere s = new Sphere(t,1.2,m);
             
             objects.Add(s);
 
-            Plane p = new Plane(new Vector(0.1, 0.9, -0.5).normalize(), 2, new Material(new Color_dbl(1.0, 1.0, 0.0)));
+            Plane p = new Plane(new Vector(0.1, 0.9, -0.5).normalize(), 4, new Material(new Color_dbl(1.0, 1.0, 0.4)));
             objects.Add(p);
 
-            Plane p1 = new Plane(new Vector(-0.5, -0.9, 0.1).normalize(), 2, new Material(new Color_dbl(0.8, 0.8, 1.0)));
+            Plane p1 = new Plane(new Vector(0.1, 0.9, 0.5).normalize(), -3.5, new Material(new Color_dbl(0.8, 0.8, 1.0)));
             objects.Add(p1);
 
             //return res;
