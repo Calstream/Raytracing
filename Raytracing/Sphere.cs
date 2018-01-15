@@ -17,36 +17,27 @@ namespace Raytracing
             Material = material;
         }
 
-
         public override IntersectionInfo Intersect(Ray ray)
         {
             IntersectionInfo info = new IntersectionInfo();
-            info.element = this;
+            info.hit_object = this;
 
             Vector dst = ray.Position - this.Position;
-            double B = dst.dot(ray.Direction);
-            double C = dst.dot(dst) - (radius * radius);
-            double D = B * B - C;
+            double b = dst.dot(ray.Direction);
+            double c = dst.dot(dst) - (radius * radius);
+            double d = b * b - c;
 
-            if (D > 0) // hit
+            if (d > 0) // hit
             {
                 info.IsHit = true;
-                info.Distance = -B - (double)Math.Sqrt(D);
+                info.Distance = -b - (double)Math.Sqrt(d);
                 info.Position = ray.Position + ray.Direction * info.Distance;
-                //info.Normal = (info.Position - Position).Normalize();
-
-                // skip uv calculation, just get the color
                 info.Color = this.Material.color;
 
             }
             else
                 info.IsHit = false;
             return info;
-        }
-
-        public override string ToString()
-        {
-            return "";
         }
     }
 }

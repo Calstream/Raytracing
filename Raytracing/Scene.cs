@@ -37,12 +37,19 @@ namespace Raytracing
             eye_pos = new Vector(0, 0, -15);
             eye_dir = new Vector(-0.2,0,5);
             backColor = Color.Gray;
-            ambience = 0.2;
+            ambience = 0.8;
             Vector t = new Vector(-0.5,0.5,2);
             Material m = new Material(Color.Red);
             Sphere s = new Sphere(t,1.2,m);
             objects = new List<IObject>();
             objects.Add(s);
+
+            Plane p = new Plane(new Vector(0.1, 0.9, -0.5).normalize(), 2, new Material(Color.Gold));
+            objects.Add(p);
+
+            Plane p1 = new Plane(new Vector(-0.5, -0.9, 0.1).normalize(), 2, new Material(Color.Azure));
+            objects.Add(p1);
+
             //return res;
         }
     }

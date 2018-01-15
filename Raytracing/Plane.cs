@@ -9,26 +9,34 @@ namespace Raytracing
 {
     public class Plane : BaseObject
     {
-        public Vector normal;
+        public double D;
 
-        public Plane(Vector pos, Vector n, Material material)
+        public Plane(Vector pos, double d, Material material)
         {
             Position = pos;
-            normal = n;
+            D = d;
             Material = material;
 
         }
 
         public override IntersectionInfo Intersect(Ray ray)
         {
-            /// TODO
-            return null;
-        }
 
-        public override string ToString()
-        {
-            /// TODO  
-            return "";
+            IntersectionInfo info = new IntersectionInfo();
+            double Vd = Position.dot(ray.Direction);
+            if (Vd == 0) return info; // no intersection
+
+            double t = -(Position.dot(ray.Position) + D) / Vd;
+
+            if (t <= 0) return info;
+
+            info.hit_object = this;
+            info.IsHit = true;
+            info.Position = ray.Position + ray.Direction * t;
+            info.Distance = t;
+            info.Color = Material.color;
+
+            return info;
         }
     }
 }
