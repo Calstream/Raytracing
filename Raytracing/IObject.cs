@@ -13,7 +13,7 @@ namespace Raytracing
 
         Material Material { get; set; }
 
-        Color Intersect(Ray ray);
+        IntersectionInfo Intersect(Ray ray);
     }
 
     public abstract class BaseObject : IObject

@@ -21,14 +21,17 @@ namespace Raytracing
         public override IntersectionInfo Intersect(Ray ray)
         {
             IntersectionInfo inf = new IntersectionInfo();
+            inf.element = this;
             Vector distance = ray.Position - this.Position;
             double a1 = distance.dot(ray.Direction);
             double a2 = distance.dot(distance) - (radius * radius);
-
-            if (a1 * a1 - a2 > 0) // intersection
+            double a3 = a1 * a1 - a2;
+            if (a3 > 0) // intersection
             {
                 inf.IsHit = true;
                 inf.Color = this.Material.color;
+                inf.Distance = -a1 - (double)Math.Sqrt(a3);
+                inf.Position = ray.Position + ray.Direction * inf.Distance;
             }
             else
             {
