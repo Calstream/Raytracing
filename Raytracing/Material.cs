@@ -9,11 +9,11 @@ namespace Raytracing
 {
     public class Material
     {
-        public Color color;
-        public Material(Color c) { color = c; }
-        public Material(int r, int g, int b, int a = 255)
+        public Color_dbl color;
+        public Material(Color_dbl c) { color = c; }
+        public Material(int r, int g, int b)
         {
-            color = Color.FromArgb(a, r, g, b);
+            color = new Color_dbl(r, g, b);
         }
     }
 }

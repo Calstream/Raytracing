@@ -60,8 +60,7 @@ namespace Raytracing
         private Color RayTrace(IntersectionInfo info, Ray ray, Scene scene, int depth)
         {
             // calculate ambient light
-            double sa = scene.ambience;
-            Color color = Color.FromArgb((int)(info.Color.R * sa), (int)(info.Color.G * sa), (int)(info.Color.B * sa));
+            Color_dbl color = info.Color * scene.ambience;
             //double shininess = Math.Pow(10, info.Element.Material.Gloss + 1);
 
             foreach (Light l in scene.lights)
@@ -74,8 +73,8 @@ namespace Raytracing
                     if (L > 0.0f)
                         color += info.Color * l.Color * L;
             }
-
-                return color;
+            color.Correct();
+            return color.ToArgb();
         }
 
 

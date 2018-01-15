@@ -36,7 +36,7 @@ namespace Raytracing
         public BaseObject()
         {
             position = new Vector(0, 0, 0);
-            material = new Material(Color.LightPink);
+            //material = new Material(Color.LightPink);
         }
 
         public abstract IntersectionInfo Intersect(Ray ray);

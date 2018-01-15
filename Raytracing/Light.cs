@@ -10,10 +10,10 @@ namespace Raytracing
     public class Light
     {
         public Vector Position;
-        public Color Color;
+        public Color_dbl Color;
         public double strength;
 
-        public Light(Vector pos, Color color)
+        public Light(Vector pos, Color_dbl color)
         {
             Position = pos;
             Color = color;

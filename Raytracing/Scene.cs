@@ -31,28 +31,34 @@ namespace Raytracing
             }
             return res;
         }
+
+        public Scene()
+        {
+            objects = new List<IObject>();
+            lights = new List<Light>();
+        }
         public void SetTest()
         {
             //Scene res = new Scene();
             eye_pos = new Vector(0, 0, -15);
             eye_dir = new Vector(-0.2,0,5);
             backColor = Color.Gray;
-            ambience = 0.8;
+            ambience = 0.4;
 
             //lights.Add(new Light(new Vector(5, 10, -1), new Color(0.8, 0.8, 0.8)));
-            lights.Add(new Light(new Vector(-3, 5, -15), Color.FromArgb(230, 230, 230)));
+            lights.Add(new Light(new Vector(-3, 5, -15), new Color_dbl(0.8, 0.8, 0.8)));
 
 
             Vector t = new Vector(-0.5,0.5,2);
-            Material m = new Material(Color.Red);
+            Material m = new Material(new Color_dbl(1.0,0.0,0.0));
             Sphere s = new Sphere(t,1.2,m);
-            objects = new List<IObject>();
+            
             objects.Add(s);
 
-            Plane p = new Plane(new Vector(0.1, 0.9, -0.5).normalize(), 2, new Material(Color.Gold));
+            Plane p = new Plane(new Vector(0.1, 0.9, -0.5).normalize(), 2, new Material(new Color_dbl(1.0, 1.0, 0.0)));
             objects.Add(p);
 
-            Plane p1 = new Plane(new Vector(-0.5, -0.9, 0.1).normalize(), 2, new Material(Color.Azure));
+            Plane p1 = new Plane(new Vector(-0.5, -0.9, 0.1).normalize(), 2, new Material(new Color_dbl(0.8, 0.8, 1.0)));
             objects.Add(p1);
 
             //return res;
