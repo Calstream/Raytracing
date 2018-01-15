@@ -12,7 +12,8 @@ namespace Raytracing
         public double ambience;
         public List<IObject> objects;
         public List<Light> lights;
-        public Vector eye;
+        public Vector eye_pos;
+        public Vector eye_dir;
 
         public IntersectionInfo IntersectRay(Ray ray)
         {
@@ -30,17 +31,19 @@ namespace Raytracing
             }
             return res;
         }
-        public Scene SetTest()
+        public void SetTest()
         {
-            Scene res = new Scene();
-            res.eye = new Vector(10, 5, 10);
-            res.backColor = Color.Gray;
-            res.ambience = 0.2;
-            Vector t = new Vector(0, 5, 0);
-            Material m = new Material(Color.Gold);
-            Sphere s = new Sphere(t,5,m);
-            res.objects.Add(s);
-            return res;
+            //Scene res = new Scene();
+            eye_pos = new Vector(0, 0, -15);
+            eye_dir = new Vector(-0.2,0,5);
+            backColor = Color.Gray;
+            ambience = 0.2;
+            Vector t = new Vector(-0.5,0.5,2);
+            Material m = new Material(Color.Red);
+            Sphere s = new Sphere(t,1.2,m);
+            objects = new List<IObject>();
+            objects.Add(s);
+            //return res;
         }
     }
 }

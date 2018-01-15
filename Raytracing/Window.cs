@@ -20,15 +20,16 @@ namespace Raytracing
             Scene scene = new Scene();
             scene.SetTest();
 
-            Rectangle rect = new Rectangle(0, 0, 300, 300);
-            Bitmap bitmap = new Bitmap(rect.Width, rect.Height);
-
+            //Rectangle rect = new Rectangle(0, 0, 300, 300);
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Graphics g = Graphics.FromImage(bitmap);
             DateTime t = DateTime.Now;
 
             pictureBox1.Image = bitmap;
 
-            raytracer.RayTraceScene(g, rect, scene);
+            raytracer.RayTraceScene(g, bitmap, scene);
+            pictureBox1.Image = bitmap;
         }
 
         private void Window_Load(object sender, EventArgs e)

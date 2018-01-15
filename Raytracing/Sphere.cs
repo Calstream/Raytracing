@@ -20,24 +20,28 @@ namespace Raytracing
 
         public override IntersectionInfo Intersect(Ray ray)
         {
-            IntersectionInfo inf = new IntersectionInfo();
-            inf.element = this;
-            Vector distance = ray.Position - this.Position;
-            double a1 = distance.dot(ray.Direction);
-            double a2 = distance.dot(distance) - (radius * radius);
-            double a3 = a1 * a1 - a2;
-            if (a3 > 0) // intersection
+            IntersectionInfo info = new IntersectionInfo();
+            info.element = this;
+
+            Vector dst = ray.Position - this.Position;
+            double B = dst.dot(ray.Direction);
+            double C = dst.dot(dst) - (radius * radius);
+            double D = B * B - C;
+
+            if (D > 0) // hit
             {
-                inf.IsHit = true;
-                inf.Color = this.Material.color;
-                inf.Distance = -a1 - (double)Math.Sqrt(a3);
-                inf.Position = ray.Position + ray.Direction * inf.Distance;
+                info.IsHit = true;
+                info.Distance = -B - (double)Math.Sqrt(D);
+                info.Position = ray.Position + ray.Direction * info.Distance;
+                //info.Normal = (info.Position - Position).Normalize();
+
+                // skip uv calculation, just get the color
+                info.Color = this.Material.color;
+
             }
             else
-            {
-                inf.IsHit = false;
-            }
-            return inf;
+                info.IsHit = false;
+            return info;
         }
 
         public override string ToString()

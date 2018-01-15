@@ -26,27 +26,26 @@ namespace Raytracing
             return Color.AliceBlue;
         }
 
-        public void RayTraceScene(Graphics g, Rectangle viewport, Scene scene)
+        public void RayTraceScene(Graphics g, Bitmap viewport, Scene scene)
         {
-            for (int y = 0; y < viewport.Height + 2; y++)
-                for (int x = 0; x < viewport.Width + 2; x++)
+            for (int y = 0; y < viewport.Height; y++)
+                for (int x = 0; x < viewport.Width; x++)
                 {
-                    g.FillRectangle(Brushes.Black, viewport);
-
                     double yp = y * 1.0f / viewport.Height * 2 - 1;
                     double xp = x * 1.0f / viewport.Width * 2 - 1;
 
-                    Vector ray_pos = scene.eye_pos + scene.eye_dir - new Vector(0, yp, 0) - new Vector(-scene.eye_dir.z, 0, scene.eye_dir.x) * xp;
-                    Vector ray_dir = ray_pos - scene.eye_pos;
+                    Vector ray_pos = scene.eye_pos + scene.eye_dir - new Vector(0, yp, 0) - scene.eye_dir.normalize().cross(new Vector(0,1,0)) * xp;
+                    Vector ray_dir = (ray_pos - scene.eye_pos).normalize();
 
                     Ray ray = new Ray(ray_pos,ray_dir);
                     Color c = CalculateColor(ray, scene);
+                    viewport.SetPixel(x, y, c);
                 }
         }
 
         public Color CalculateColor(Ray ray, Scene scene)
         {
-            IntersectionInfo info = TestIntersection(ray, scene, null);
+            IntersectionInfo info = TestIntersection(ray, scene);
             if (info.IsHit)
             {
                 // execute the actual raytrace algorithm
@@ -70,7 +69,7 @@ namespace Raytracing
         }
 
 
-        private IntersectionInfo TestIntersection(Ray ray, Scene scene, IObject exclude)
+        private IntersectionInfo TestIntersection(Ray ray, Scene scene)
         {
             int hitcount = 0;
             IntersectionInfo best = new IntersectionInfo();
@@ -78,9 +77,6 @@ namespace Raytracing
 
             foreach (IObject o in scene.objects)
             {
-                if (o == exclude)
-                    continue;
-
                 IntersectionInfo info = o.Intersect(ray);
                 if (info.IsHit && info.Distance < best.Distance && info.Distance >= 0)
                 {
