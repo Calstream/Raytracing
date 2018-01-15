@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 namespace Raytracing
 {
-    class Scene
+    public class Scene
     {
-        Color backColor;
-        double ambience;
-        List<IObject> objects;
-        Vector eye;
+        public Color backColor;
+        public double ambience;
+        public List<IObject> objects;
+        public List<Light> lights;
+        public Vector eye;
 
         public IntersectionInfo IntersectRay(Ray ray)
         {
@@ -29,7 +30,7 @@ namespace Raytracing
             }
             return res;
         }
-        public Scene Test()
+        public Scene SetTest()
         {
             Scene res = new Scene();
             res.eye = new Vector(10, 5, 10);

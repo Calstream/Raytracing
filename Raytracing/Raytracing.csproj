@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntersectionInfo.cs" />
+    <Compile Include="Raytracer.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Window.cs">
       <SubType>Form</SubType>

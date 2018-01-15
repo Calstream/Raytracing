@@ -1,0 +1,10 @@
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.csprojResolveAssemblyReference.cache
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.Properties.Resources.resources
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.Window.resources
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.csproj.GenerateResource.Cache
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.csproj.CoreCompileInputs.cache
+C:\Misc\VS\Raytracing\Raytracing\bin\Debug\Raytracing.exe.config
+C:\Misc\VS\Raytracing\Raytracing\bin\Debug\Raytracing.exe
+C:\Misc\VS\Raytracing\Raytracing\bin\Debug\Raytracing.pdb
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.exe
+C:\Misc\VS\Raytracing\Raytracing\obj\Debug\Raytracing.pdb

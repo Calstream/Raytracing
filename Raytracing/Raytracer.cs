@@ -28,10 +28,20 @@ namespace Raytracing
 
         public void RayTraceScene(Graphics g, Rectangle viewport, Scene scene)
         {
-            g.FillRectangle(Brushes.Black, viewport);
-            Ray ray = new Ray();
-            Color c = CalculateColor(ray, scene);
+            for (int y = 0; y < viewport.Height + 2; y++)
+                for (int x = 0; x < viewport.Width + 2; x++)
+                {
+                    g.FillRectangle(Brushes.Black, viewport);
 
+                    double yp = y * 1.0f / viewport.Height * 2 - 1;
+                    double xp = x * 1.0f / viewport.Width * 2 - 1;
+
+                    Vector ray_pos = scene.eye_pos + scene.eye_dir - new Vector(0, yp, 0) - new Vector(-scene.eye_dir.z, 0, scene.eye_dir.x) * xp;
+                    Vector ray_dir = ray_pos - scene.eye_pos;
+
+                    Ray ray = new Ray(ray_pos,ray_dir);
+                    Color c = CalculateColor(ray, scene);
+                }
         }
 
         public Color CalculateColor(Ray ray, Scene scene)

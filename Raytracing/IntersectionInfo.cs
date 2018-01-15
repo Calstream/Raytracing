@@ -10,7 +10,7 @@ namespace Raytracing
     public class IntersectionInfo
     {
         public bool IsHit; // indicates if the shape was hit
-        //public int HitCount; // counts the number of shapes that were hit
+        public int HitCount; // counts the number of shapes that were hit
         public IObject element; // the closest shape that was intersected
         public Vector Position; // position of intersection
         //public Vector Normal; // normal vector on intesection point 
