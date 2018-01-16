@@ -49,15 +49,15 @@ namespace Raytracing
             if (info.IsHit)
             {
                 // execute the actual raytrace algorithm
-                Color c = RayTrace(info, ray, scene, 0);
+                Color c = RayTrace(info, ray, scene, 0).toStandart();
                 return c;
             }
 
-            return scene.backColor;
+            return scene.backColor.toStandart();
         }
 
 
-        private Color RayTrace(IntersectionInfo info, Ray ray, Scene scene, int depth)
+        private Color_dbl RayTrace(IntersectionInfo info, Ray ray, Scene scene, int depth)
         {
             // calculate ambient light
             Color_dbl color = info.Color * scene.ambience;
@@ -88,10 +88,34 @@ namespace Raytracing
                         // element than the current element
                         color *= 0.5 + 0.5 * Math.Pow(shadow.hit_object.Material.Transparency, 0.5); // Math.Pow(.5, shadow.HitCount);
                     }
+
+                    // calculate reflection ray
+                    if (info.hit_object.Material.Reflection > 0)
+                    {
+                        //Ray reflectionray = GetReflectionRay(info.Position, info.Normal, ray.Direction);
+                        Ray reflectionray = new Ray(info.Position, ray.Direction + info.Normal * 2 * -info.Normal.dot(ray.Direction));
+                        //private Ray GetReflectionRay(Vector P, Vector N, Vector V)
+                        //{
+                        //    double c1 = -N.Dot(V);
+                        //    Vector Rl = V + (N * 2 * c1);
+                        //    return new Ray(P, Rl);
+                        //}
+
+                        IntersectionInfo refl = TestIntersection(reflectionray, scene, info.hit_object);
+                        if (refl.IsHit && refl.Distance > 0)
+                        {
+                            // recursive call, this makes reflections expensive
+                            refl.Color = RayTrace(refl, reflectionray, scene, depth + 1);
+                        }
+                        else // does not reflect an object, then reflect background color
+                            refl.Color = scene.backColor;
+                        color = color.Blend(refl.Color, info.hit_object.Material.Reflection);
+                    }
+
                 }
             }
                 color.Correct();
-            return color.ToArgb();
+            return color;
         }
 
 

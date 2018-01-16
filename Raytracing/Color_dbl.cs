@@ -96,9 +96,16 @@ namespace Raytracing
             B = (B > 0.0) ? ((B > 1.0) ? 1.0f : B) : 0.0f;
         }
 
-        public Color ToArgb()
+        public Color toStandart()
         {
             return Color.FromArgb((int)(R * 255), (int)(G * 255), (int)(B * 255));
+        }
+
+        public Color_dbl Blend(Color_dbl other, double weight)
+        {
+            Color_dbl result = new Color_dbl(this);
+            result = this * (1 - weight) + other * weight;
+            return result;
         }
     }
 }
