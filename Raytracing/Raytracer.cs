@@ -46,9 +46,8 @@ namespace Raytracing
         public Color CalculateColor(Ray ray, Scene scene)
         {
             IntersectionInfo info = TestIntersection(ray, scene,null);
-            if (info.IsHit)
+            if (info.is_hit)
             {
-                // execute the actual raytrace algorithm
                 Color c = RayTrace(info, ray, scene, 0).toStandart();
                 return c;
             }
@@ -59,57 +58,33 @@ namespace Raytracing
 
         private Color_dbl RayTrace(IntersectionInfo info, Ray ray, Scene scene, int depth)
         {
-            // calculate ambient light
             Color_dbl color = info.Color * scene.ambience;
-            //double shininess = Math.Pow(10, info.Element.Material.Gloss + 1);
-
             foreach (Light l in scene.lights)
             {
-
-                // calculate diffuse lighting
-                Vector v = (l.Position - info.Position).normalize();
-
-                double L = v.dot(info.Normal);
+                Vector v = (l.Position - info.pos).normalize(); // diffuse 
+                double L = v.dot(info.normal);
                 if (L > 0.0f)
                     color += info.Color * l.Color * L;
 
-
-                if (depth < 3)
+                if (depth < 5)
                 {
-                    IntersectionInfo shadow = new IntersectionInfo();
-                    // calculate shadow, create ray from intersection point to light
-                    Ray shadowray = new Ray(info.Position, v);
+                    //shadows
+                    IntersectionInfo shadow_info = new IntersectionInfo();
+                    Ray toLight = new Ray(info.pos, v);
+                    shadow_info = TestIntersection(toLight, scene, info.hit_object);
+                    if (shadow_info.is_hit && shadow_info.hit_object != info.hit_object)
+                        color *= 0.5;
 
-                    // find any element in between intersection point and light
-                    shadow = TestIntersection(shadowray, scene, info.hit_object);
-                    if (shadow.IsHit && shadow.hit_object != info.hit_object)
-                    {
-                        // only cast shadow if the found interesection is another
-                        // element than the current element
-                        color *= 0.5 + 0.5 * Math.Pow(shadow.hit_object.Material.Transparency, 0.5); // Math.Pow(.5, shadow.HitCount);
-                    }
-
-                    // calculate reflection ray
+                    //reflections
                     if (info.hit_object.Material.Reflection > 0)
                     {
-                        //Ray reflectionray = GetReflectionRay(info.Position, info.Normal, ray.Direction);
-                        Ray reflectionray = new Ray(info.Position, ray.Direction + info.Normal * 2 * -info.Normal.dot(ray.Direction));
-                        //private Ray GetReflectionRay(Vector P, Vector N, Vector V)
-                        //{
-                        //    double c1 = -N.Dot(V);
-                        //    Vector Rl = V + (N * 2 * c1);
-                        //    return new Ray(P, Rl);
-                        //}
-
-                        IntersectionInfo refl = TestIntersection(reflectionray, scene, info.hit_object);
-                        if (refl.IsHit && refl.Distance > 0)
-                        {
-                            // recursive call, this makes reflections expensive
-                            refl.Color = RayTrace(refl, reflectionray, scene, depth + 1);
-                        }
-                        else // does not reflect an object, then reflect background color
-                            refl.Color = scene.backColor;
-                        color = color.Blend(refl.Color, info.hit_object.Material.Reflection);
+                        Ray reflectionray = new Ray(info.pos, ray.Direction + info.normal * 2 * -info.normal.dot(ray.Direction));
+                        IntersectionInfo ref_info = TestIntersection(reflectionray, scene, info.hit_object);
+                        if (ref_info.is_hit && ref_info.dist > 0)
+                            ref_info.Color = RayTrace(ref_info, reflectionray, scene, depth + 1);
+                        else 
+                            ref_info.Color = scene.backColor;
+                        color = color.Blend(ref_info.Color, info.hit_object.Material.Reflection);
                     }
 
                 }
@@ -123,20 +98,20 @@ namespace Raytracing
         {
             int hitcount = 0;
             IntersectionInfo best = new IntersectionInfo();
-            best.Distance = double.MaxValue;
+            best.dist = double.MaxValue;
 
             foreach (IObject o in scene.objects)
             {
                 if (o == ignore)
                     continue;
                 IntersectionInfo info = o.Intersect(ray);
-                if (info.IsHit && info.Distance < best.Distance && info.Distance >= 0)
+                if (info.is_hit && info.dist < best.dist && info.dist >= 0)
                 {
                     best = info;
                     hitcount++;
                 }
             }
-            best.HitCount = hitcount;
+            best.hit_count = hitcount;
             return best;
         }
 

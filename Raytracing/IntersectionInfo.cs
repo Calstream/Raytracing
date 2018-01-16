@@ -9,13 +9,13 @@ namespace Raytracing
 {
     public class IntersectionInfo
     {
-        public bool IsHit; // indicates if the shape was hit
-        public int HitCount; // counts the number of shapes that were hit
-        public IObject hit_object; // the closest shape that was intersected
-        public Vector Position; // position of intersection
-        public Color_dbl Color; // color at intersection
-        public double Distance; // distance from point to screen
-        public Vector Normal; // normal vector on intesection point 
+        public bool is_hit; 
+        public int hit_count; 
+        public IObject hit_object; 
+        public Vector pos;
+        public Color_dbl Color; 
+        public double dist; // hit point to viewport
+        public Vector normal; 
 
         public IntersectionInfo() { }
     }

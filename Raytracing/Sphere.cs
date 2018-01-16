@@ -29,14 +29,14 @@ namespace Raytracing
 
             if (d > 0) // hit
             {
-                info.IsHit = true;
-                info.Distance = -b - (double)Math.Sqrt(d);
-                info.Position = ray.Position + ray.Direction * info.Distance;
+                info.is_hit = true;
+                info.dist = -b - (double)Math.Sqrt(d);
+                info.pos = ray.Position + ray.Direction * info.dist;
                 info.Color = this.Material.color;
-                info.Normal = (info.Position - Position).normalize();
+                info.normal = (info.pos - Position).normalize();
             }
             else
-                info.IsHit = false;
+                info.is_hit = false;
             return info;
         }
     }

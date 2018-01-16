@@ -31,11 +31,11 @@ namespace Raytracing
             if (t <= 0) return info;
 
             info.hit_object = this;
-            info.IsHit = true;
-            info.Position = ray.Position + ray.Direction * t;
-            info.Distance = t;
+            info.is_hit = true;
+            info.pos = ray.Position + ray.Direction * t;
+            info.dist = t;
             info.Color = Material.color;
-            info.Normal = Position;
+            info.normal = Position;
             return info;
         }
     }

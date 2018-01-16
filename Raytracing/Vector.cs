@@ -22,7 +22,6 @@ namespace Raytracing
             this.z = z;
         }
 
-        // copy constructor
         public Vector(Vector v) : this(v.x, v.y, v.z) { }
 
         public Vector normalize()
